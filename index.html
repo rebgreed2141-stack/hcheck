@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クラス別チェックリスト</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="tabs">
+    <div class="tabs-left">
+      <button class="tab-btn active" data-tab="input">入力</button>
+      <button class="tab-btn" data-tab="month">月一覧</button>
+      <button class="tab-btn" data-tab="admin">管理</button>
+    </div>
+    <div class="app-version">試作版 Ver.0.1.0</div>
+  </div>
+
+  <section id="tab-input" class="tab-panel active">
+    <div class="sticky-header">
+      <div class="header-grid">
+        <div class="field-group">
+          <label for="class-select">クラス</label>
+          <select id="class-select"></select>
+        </div>
+
+        <div class="field-group">
+          <label for="month-select">対象月</label>
+          <input type="month" id="month-select">
+        </div>
+
+        <div class="field-group">
+          <label>&nbsp;</label>
+          <button id="today-btn" class="secondary-btn" type="button">今月へ</button>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-label">チェック済み</div>
+          <div id="checked-count" class="summary-value">0</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-label">対象マス数</div>
+          <div id="total-count" class="summary-value">0</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-label">達成率</div>
+          <div id="checked-rate" class="summary-value">0%</div>
+        </div>
+      </div>
+      <div class="header-note">日曜日は自動で非表示。左端の項目名と上の日付は固定です。</div>
+    </div>
+
+    <div class="matrix-wrap">
+      <table class="matrix-table">
+        <thead id="matrix-head"></thead>
+        <tbody id="matrix-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="tab-month" class="tab-panel">
+    <div class="month-wrap">
+      <div class="month-toolbar">
+        <div class="month-toolbar-left">
+          <button id="prev-month-btn" class="secondary-btn" type="button">前月</button>
+          <h2 id="month-title" class="month-title"></h2>
+          <button id="next-month-btn" class="secondary-btn" type="button">次月</button>
+        </div>
+        <div id="month-class-label" class="month-class-label"></div>
+      </div>
+      <div id="month-summary" class="month-summary"></div>
+      <div class="daily-grid-wrap">
+        <table class="daily-summary-table">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>曜日</th>
+              <th>完了数</th>
+              <th>達成率</th>
+              <th>未チェック数</th>
+            </tr>
+          </thead>
+          <tbody id="daily-summary-body"></tbody>
+        </table>
+      </div>
+      <div id="missing-panel" class="missing-panel">
+        <div class="missing-title">日付を押すと、その日の未チェック項目をここに表示します。</div>
+        <div id="missing-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-admin" class="tab-panel">
+    <div class="admin-wrap">
+      <button id="backup-btn" class="admin-btn">バックアップ</button>
+      <button id="restore-btn" class="admin-btn">データの復元</button>
+      <button id="delete-btn" class="admin-btn danger-btn">データを全削除</button>
+      <input type="file" id="restore-file" accept=".json" hidden>
+      <div class="admin-note">
+        この試作版はブラウザ内に保存します。GitHub Pagesで開いた場合も、同じ端末・同じブラウザなら保持されます。
+      </div>
+    </div>
+  </section>
+
+  <script src="checklists.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
