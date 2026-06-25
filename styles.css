@@ -360,15 +360,98 @@ input[type="month"], select {
   line-height: 1.6;
 }
 
-.admin-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 420px;
+.admin-page {
+  max-width: 428px;
+  margin: 0;
 }
 
-.danger-btn {
-  background: #fff1f1;
+.admin-heading {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.admin-subtitle {
+  margin-bottom: 18px;
+  color: #7b8794;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.server-card {
+  margin-bottom: 14px;
+  padding: 16px;
+  border: 1px solid #d5dde7;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.server-title {
+  margin-bottom: 18px;
+  padding-left: 10px;
+  border-left: 4px solid #2563eb;
+  color: #0f2744;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.server-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #0f2744;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.server-input {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid #c8d2df;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 16px;
+}
+
+.server-save-btn,
+.admin-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.server-save-btn {
+  border: 1px solid #d5dde7;
+  background: #ffffff;
+  color: #102033;
+}
+
+.admin-action-btn {
+  margin-bottom: 12px;
+  border: 1px solid #d5dde7;
+  background: #ffffff;
+  color: #102033;
+}
+
+.backup-btn,
+.send-btn {
+  border-color: #4caf50;
+  background: #4caf50;
+  color: #ffffff;
+}
+
+.delete-btn {
+  border-color: #cf262b;
+  background: #cf262b;
+  color: #ffffff;
 }
 
 .admin-note {

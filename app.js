@@ -1,4 +1,6 @@
 const STORAGE_KEY = "class_checklist_matrix_v1";
+const SERVER_URL_KEY = "hcheck_server_url";
+const DEFAULT_SERVER_URL = "http://192.168.1.60:3000";
 let selectedClassId = "class0";
 let selectedMonth = "";
 let selectedMissingDateKey = "";
@@ -363,7 +365,15 @@ function setCheckedValue(classId, dateKey, itemNo, value) {
 }
 
 function setupAdmin() {
+  const serverUrlInput = document.getElementById("server-url-input");
+  const savedUrl = localStorage.getItem(SERVER_URL_KEY) || DEFAULT_SERVER_URL;
+  if (serverUrlInput) {
+    serverUrlInput.value = savedUrl;
+  }
+
+  document.getElementById("save-server-url-btn").addEventListener("click", saveServerUrl);
   document.getElementById("backup-btn").addEventListener("click", backupData);
+  document.getElementById("send-server-btn").addEventListener("click", sendToServer);
 
   document.getElementById("restore-btn").addEventListener("click", () => {
     document.getElementById("restore-file").click();
@@ -380,6 +390,58 @@ function setupAdmin() {
     renderMonthTab();
     alert("削除しました。");
   });
+}
+
+function normalizeServerUrl(value) {
+  return String(value || "").trim().replace(/\/+$/, "");
+}
+
+function getServerUrl() {
+  const input = document.getElementById("server-url-input");
+  const value = normalizeServerUrl(input ? input.value : "");
+  return value || DEFAULT_SERVER_URL;
+}
+
+function saveServerUrl() {
+  const url = getServerUrl();
+  localStorage.setItem(SERVER_URL_KEY, url);
+  const input = document.getElementById("server-url-input");
+  if (input) input.value = url;
+  alert("保存しました。");
+}
+
+function buildServerPayload() {
+  return {
+    app: "hcheck",
+    savedAt: new Date().toISOString(),
+    checklistMaster: CHECKLIST_MASTER,
+    payload: loadStore()
+  };
+}
+
+async function sendToServer() {
+  const serverUrl = getServerUrl();
+  localStorage.setItem(SERVER_URL_KEY, serverUrl);
+
+  if (!confirm("サーバーに送信しますか？")) return;
+
+  try {
+    const res = await fetch(`${serverUrl}/api/hcheck`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(buildServerPayload())
+    });
+
+    const result = await res.json().catch(() => ({}));
+    if (!res.ok || !result.ok) {
+      throw new Error(result.message || "送信に失敗しました。");
+    }
+
+    alert("サーバーに送信しました。");
+  } catch (error) {
+    console.error(error);
+    alert("サーバーに送信できませんでした。園内PC URLとWi-Fi接続を確認してください。");
+  }
 }
 
 function backupData() {

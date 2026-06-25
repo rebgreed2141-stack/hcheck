@@ -95,13 +95,25 @@
   </section>
 
   <section id="tab-admin" class="tab-panel">
-    <div class="admin-wrap">
-      <button id="backup-btn" class="admin-btn">バックアップ</button>
-      <button id="restore-btn" class="admin-btn">データの復元</button>
-      <button id="delete-btn" class="admin-btn danger-btn">データを全削除</button>
+    <div class="admin-page">
+      <h2 class="admin-heading">管理</h2>
+      <div class="admin-subtitle">バックアップ、復元、削除を行います。</div>
+
+      <div class="server-card">
+        <div class="server-title">サーバー接続</div>
+        <label class="server-label" for="server-url-input">園内PC URL</label>
+        <input type="url" id="server-url-input" class="server-input" value="http://192.168.1.60:3000">
+        <button id="save-server-url-btn" class="server-save-btn" type="button">保存</button>
+      </div>
+
+      <button id="backup-btn" class="admin-action-btn backup-btn" type="button">バックアップ</button>
+      <button id="send-server-btn" class="admin-action-btn send-btn" type="button">サーバーに送信</button>
+      <button id="restore-btn" class="admin-action-btn restore-btn" type="button">データ復元</button>
+      <button id="delete-btn" class="admin-action-btn delete-btn" type="button">データ削除</button>
       <input type="file" id="restore-file" accept=".json" hidden>
-      <div class="admin-note">
-        この試作版はブラウザ内に保存します。GitHub Pagesで開いた場合も、同じ端末・同じブラウザなら保持されます。
+
+      <div class="admin-note" id="admin-note">
+        この端末のデータをJSON形式でサーバーへ送信します。
       </div>
     </div>
   </section>
