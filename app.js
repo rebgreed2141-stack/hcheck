@@ -1,6 +1,8 @@
 const STORAGE_KEY = "class_checklist_matrix_v1";
 const SERVER_URL_KEY = "hcheck_server_url";
 const DEFAULT_SERVER_URL = "http://192.168.1.60:3000";
+const VERSION_INFO_URL = "./version.json";
+const DEFAULT_VERSION = "0.1.0";
 let selectedClassId = "class0";
 let selectedMonth = "";
 let selectedMissingDateKey = "";
@@ -13,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMonthTab();
   setupMonthNav();
   setupAdmin();
+  setupVersionTab();
+  loadVersionInfo();
 });
 
 function setupTabs() {
@@ -26,6 +30,9 @@ function setupTabs() {
 
       if (button.dataset.tab === "month") {
         renderMonthTab();
+      }
+      if (button.dataset.tab === "version") {
+        loadVersionInfo();
       }
     });
   });
@@ -496,6 +503,55 @@ function restoreData(event) {
   };
 
   reader.readAsText(file, "utf-8");
+}
+
+
+function normalizeVersionText(version) {
+  return version ? `Ver.${version}` : "確認中";
+}
+
+async function loadVersionInfo() {
+  const topVersion = document.getElementById("app-version");
+  const currentVersionText = document.getElementById("current-version-text");
+  const latestVersionText = document.getElementById("latest-version-text");
+  const versionStatus = document.getElementById("version-status");
+
+  try {
+    const res = await fetch(`${VERSION_INFO_URL}?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("version.json fetch failed");
+
+    const info = await res.json();
+    const version = String(info.version || DEFAULT_VERSION);
+    const updatedAt = String(info.updatedAt || "");
+
+    if (topVersion) topVersion.textContent = normalizeVersionText(version);
+    if (currentVersionText) currentVersionText.textContent = normalizeVersionText(version);
+    if (latestVersionText) latestVersionText.textContent = normalizeVersionText(version);
+    if (versionStatus) {
+      versionStatus.innerHTML = updatedAt
+        ? `現在のバージョンは <b>${normalizeVersionText(version)}</b> です。更新日：<b>${escapeHtml(updatedAt)}</b>`
+        : `現在のバージョンは <b>${normalizeVersionText(version)}</b> です。`;
+    }
+  } catch (error) {
+    console.error(error);
+    if (topVersion) topVersion.textContent = normalizeVersionText(DEFAULT_VERSION);
+    if (currentVersionText) currentVersionText.textContent = normalizeVersionText(DEFAULT_VERSION);
+    if (latestVersionText) latestVersionText.textContent = "確認できません";
+    if (versionStatus) versionStatus.textContent = "version.json を読み込めませんでした。";
+  }
+}
+
+function setupVersionTab() {
+  const reloadButton = document.getElementById("version-reload-btn");
+  if (reloadButton) {
+    reloadButton.addEventListener("click", loadVersionInfo);
+  }
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js").catch((error) => {
+      console.error("service worker registration failed", error);
+    });
+  }
 }
 
 function formatMonthInput(year, month) {

@@ -14,8 +14,9 @@
       <button class="tab-btn active" data-tab="input">入力</button>
       <button class="tab-btn" data-tab="month">月一覧</button>
       <button class="tab-btn" data-tab="admin">管理</button>
+      <button class="tab-btn" data-tab="version">バージョン</button>
     </div>
-    <div class="app-version">試作版 Ver.0.1.0</div>
+    <div class="app-version" id="app-version">Ver.確認中</div>
   </div>
 
   <section id="tab-input" class="tab-panel active">
@@ -114,6 +115,29 @@
 
       <div class="admin-note" id="admin-note">
         この端末のデータをJSON形式でサーバーへ送信します。
+      </div>
+    </div>
+  </section>
+
+
+  <section id="tab-version" class="tab-panel">
+    <div class="version-page">
+      <h2 class="admin-heading">バージョン</h2>
+      <div id="version-status" class="admin-subtitle">バージョン情報を確認しています。</div>
+
+      <div class="version-card">
+        <div class="version-title">現在のバージョン</div>
+        <div id="current-version-text" class="version-value">確認中</div>
+      </div>
+
+      <div class="version-card">
+        <div class="version-title">最新のバージョン</div>
+        <div id="latest-version-text" class="version-value">確認中</div>
+      </div>
+
+      <div class="version-card">
+        <button id="version-reload-btn" class="admin-action-btn backup-btn" type="button">再確認</button>
+        <div class="version-note">version.json を変更すると、この画面に反映されます。</div>
       </div>
     </div>
   </section>

@@ -497,3 +497,36 @@ input[type="month"], select {
     width: 62px;
   }
 }
+
+
+.version-page {
+  max-width: 760px;
+  padding: 12px 0;
+}
+
+.version-card {
+  margin: 14px 0;
+  padding: 16px;
+  border: 1px solid #cfd8e1;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+.version-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #556;
+  margin-bottom: 8px;
+}
+
+.version-value {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.version-note {
+  margin-top: 10px;
+  color: #667;
+  font-size: 14px;
+  line-height: 1.7;
+}
